@@ -11,8 +11,10 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [signupError, setSignupError] = useState(false);
 
-  const createUser = () => {
+  const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     fetch("http://localhost:8080/users", {
       method: "post",
       headers: {
@@ -21,11 +23,13 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
       body: JSON.stringify({ email: email, password: password, username: username })
     }).then((response) => {
       if (response.status === 200) {
-        console.log("User successfully created");
+        console.log(response);
+      } else if (response.status === 409) {
+        setSignupError(true);
       } else {
-        console.log("error has occurred");
+        console.log("other error");
       }
-    })
+    });
   }
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +56,7 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
     <input type="text" onChange={handleUsername}/>
     <button onClick={createUser}>Click</button>
     </form>
+    {signupError && <div>You need to create a unique email and username. Please log in if you already have an account.</div>}
     </div>
   )
 }

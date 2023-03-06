@@ -4,6 +4,8 @@ const path = require("path");
 const logger = require("morgan");
 const fileUpload = require("express-fileupload");
 
+const usersRouter = require("./routes/users");
+
 const app = express();
 app.use(fileUpload());
 
@@ -18,5 +20,7 @@ app.get("/", (req, res) => {
   res.send("It works");
   console.log(res);
 });
+
+app.use("/users", usersRouter);
 
 module.exports = app;
