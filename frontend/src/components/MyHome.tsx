@@ -1,4 +1,5 @@
 import React from 'react';
+import PostForm from './PostForm';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -8,7 +9,9 @@ interface MyHomeProps {
 
 const MyHome: React.FC<MyHomeProps> = ({ navigate }) => {
   return (
-    <div>Hello world</div>
+    <div>
+    <PostForm />  
+    </div>
   )
 }
 
