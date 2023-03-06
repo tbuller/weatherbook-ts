@@ -10,7 +10,10 @@ const Landing: React.FC<LandingProps> = ({ navigate }) => {
 
 
   return (
-    <div>Hello world</div>
+    <div>
+    <h1>Welcome to Weatherbook!</h1>
+    <h3>An open space to complain about the weather</h3>
+    </div>
   )
 }
 
