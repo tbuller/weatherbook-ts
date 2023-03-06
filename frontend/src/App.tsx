@@ -1,10 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import Landing from './components/Landing';
+import Signup from './components/Signup';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 function App() {
+
+  const navigate = useNavigate();
+
   return (
-    <div className="hello-world">Hello world</div>
+    <Routes>
+      <Route path="/" element={<Landing navigate={navigate} />} />
+    </Routes>
   );
 }
 
