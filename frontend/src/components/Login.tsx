@@ -11,6 +11,7 @@ const Login: React.FC<LoginProps> = ({ navigate }) => {
   const [users, setUsers] = useState<any[]>([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8080/users")
@@ -30,9 +31,11 @@ const Login: React.FC<LoginProps> = ({ navigate }) => {
     event.preventDefault();
     const matchesUser = users.find(u => u.email === email && u.password === password);
     if (matchesUser) {
-      console.log("success");
+      setIncorrect(false);
+      localStorage.setItem("userId", matchesUser._id);
+      navigate("/myhome");
     } else {
-      console.log("not today buddy");
+      setIncorrect(true);
     }
   }
 
@@ -46,6 +49,7 @@ const Login: React.FC<LoginProps> = ({ navigate }) => {
     <input type="password" onChange={handlePassword}/>
     <button onClick={handleLogin}>click</button>
     </form>
+    {incorrect && <div>Incorrect email or password</div>}
     </div>
   )
 }

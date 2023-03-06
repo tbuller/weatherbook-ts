@@ -5,6 +5,7 @@ const logger = require("morgan");
 const fileUpload = require("express-fileupload");
 
 const usersRouter = require("./routes/users");
+const postsRouter = require("./routes/posts");
 
 const app = express();
 app.use(fileUpload());
@@ -22,5 +23,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRouter);
+app.use("posts", postsRouter)
 
 module.exports = app;
