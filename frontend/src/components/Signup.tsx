@@ -1,14 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../redux/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, selectAllUsers, User } from '../redux/users';
 
 interface SignupProps {
   navigate: ReturnType<typeof useNavigate>;
 }
 
 const Signup: React.FC<SignupProps> = ({ navigate }) => {
+
+  const users: User[] = useSelector(selectAllUsers);
 
   const dispatch = useDispatch();  
   const [email, setEmail] = useState("");
@@ -28,6 +30,8 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
       .then((data) => {
         if (data.message === "OK") {
           console.log("it works");
+          const user = data.user;
+          dispatch(addUser(user));
         } else if (data.message === "email already in use") {
           console.log("email duplicate");
         } else if (data.message === "username already taken") {
@@ -64,6 +68,9 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
     <button onClick={createUser}>Click</button>
     </form>
     {signupError && <div>You need to create a unique email and username. Please log in if you already have an account.</div>}
+    {users.map(u => 
+      <div key={u._id}>{u.username}</div>
+      )}
     </div>
   )
 }

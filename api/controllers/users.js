@@ -16,7 +16,7 @@ const UsersController = {
       if (err) {
         res.status(401).json({ message: "server error" });
       } else {
-        res.status(200).json({ message: "OK" });
+        res.status(200).json({ message: "OK", user: user });
       }
     })
   },

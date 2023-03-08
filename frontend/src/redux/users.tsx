@@ -4,7 +4,7 @@ import { RootState } from './store';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface User {
-  _id: Object;
+  _id: any;
   friends: [];
   requests: [];
   email: String;
@@ -27,6 +27,9 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
     addUser: (state, action) => {
       state.users.push(action.payload);
     },
@@ -36,7 +39,7 @@ const usersSlice = createSlice({
   }
 })
 
-export const selectAllUsers = (state: RootState) => state.users;
+export const selectAllUsers = (state: RootState) => state.users.users;
 
 export const { addUser, deleteUser } = usersSlice.actions;
 
