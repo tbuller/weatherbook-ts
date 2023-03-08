@@ -5,11 +5,11 @@ const UsersController = {
     const { email, password, username } = req.body;
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      return res.status(409).send("email already in use");
+      return res.status(409).json({ message: "email already in use" });
     }
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-      return res.status(409).send("username already taken");
+      return res.status(409).json({ message: "username already taken" });
     }
     const user = new User(req.body);
     user.save((err) => {

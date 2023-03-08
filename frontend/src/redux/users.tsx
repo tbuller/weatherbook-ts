@@ -31,15 +31,12 @@ const usersSlice = createSlice({
       state.users.push(action.payload);
     },
     deleteUser: (state, action) => {
-      state.users = state.users.filter(user => user._id !== action.payload)
+      state.users = state.users.filter(user => user._id !== action.payload);
     }
   }
 })
 
-export const selectUser = createSelector(
-  (state: RootState) => state.users.users,
-  (users) => users.find(user => user._id === currentUserId)
-);
+export const selectAllUsers = (state: RootState) => state.users;
 
 export const { addUser, deleteUser } = usersSlice.actions;
 

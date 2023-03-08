@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../redux/users';
 
 interface SignupProps {
   navigate: ReturnType<typeof useNavigate>;
@@ -8,6 +10,7 @@ interface SignupProps {
 
 const Signup: React.FC<SignupProps> = ({ navigate }) => {
 
+  const dispatch = useDispatch();  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -21,15 +24,19 @@ const Signup: React.FC<SignupProps> = ({ navigate }) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email: email, password: password, username: username })
-    }).then((response) => {
-      if (response.status === 200) {
-        console.log(response);
-      } else if (response.status === 409) {
-        setSignupError(true);
-      } else {
-        console.log("other error");
-      }
-    });
+    }).then((response) => response.json())
+      .then((data) => {
+        if (data.message === "OK") {
+          console.log("it works");
+        } else if (data.message === "email already in use") {
+          console.log("email duplicate");
+        } else if (data.message === "username already taken") {
+          console.log("username duplicate");
+        } else {
+          console.log("server error");
+        }
+      })
+    ;
   }
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
